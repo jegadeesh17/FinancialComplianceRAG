@@ -8,7 +8,7 @@
 |-------|-------|
 | **Document** | PROJECT_SPEC.md |
 | **Version** | 1.1 |
-| **Status** | Finalized — scaffold pushed; Phase 1 pending |
+| **Status** | Active — Phase 1 complete |
 | **Last updated** | 2026-07-07 |
 | **Repository** | [github.com/jegadeesh17/FinancialComplianceRAG](https://github.com/jegadeesh17/FinancialComplianceRAG) |
 | **Project folder** | `FinancialComplianceRAG` |
@@ -57,7 +57,7 @@ This project delivers an **enterprise-grade Retrieval-Augmented Generation (RAG)
 
 | ID | Requirement | Module | Status |
 |----|-------------|--------|--------|
-| FR-01 | Load configuration from `.env` | `src/config.py` | ⬜ Phase 1 |
+| FR-01 | Load configuration from `.env` | `src/config.py` | ✅ |
 | FR-02 | Extract text from PDFs with page metadata | `src/ingest_docs.py` | ⬜ Phase 2 |
 | FR-03 | Chunk text paragraph-aware (not naive char splits) | `src/ingest_docs.py` | ⬜ Phase 2 |
 | FR-04 | Embed chunks with Sentence-Transformers | `src/embeddings.py` | ⬜ Phase 3 |
@@ -200,7 +200,7 @@ TOP_K=5
 
 | Phase | Name | Status | Checkpoint |
 |-------|------|--------|------------|
-| **1** | Project Setup & MLOps | ⬜ Pending | `pytest tests/test_phase1_setup.py -v` |
+| **1** | Project Setup & MLOps | ✅ Complete | `pytest tests/test_phase1_setup.py -v` |
 | **2** | Document Ingestion | ⬜ Pending | `pytest tests/test_phase2_ingest.py -v` |
 | **3** | Embeddings & Vector Store | ⬜ Pending | `pytest tests/test_phase3_vectorstore.py -v` |
 | **4** | Retrieval System | ⬜ Pending | `pytest tests/test_phase4_retriever.py -v` |
@@ -264,4 +264,4 @@ FinancialComplianceRAG/
 | Date | Version | Change |
 |------|---------|--------|
 | 2026-07-07 | 1.0 | Spec finalized; scaffold pushed to GitHub |
-| 2026-07-07 | 1.1 | Initial PDFs: Tesla 10-K replaced with HDFC Bank annual report |
+| 2026-07-07 | 1.2 | Phase 1 complete — config.py, DATA_SOURCES.md, checkpoint tests |

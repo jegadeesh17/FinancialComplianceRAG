@@ -25,6 +25,7 @@ Financial Compliance RAG is an enterprise Retrieval-Augmented Generation system 
 - **Initial PDFs (Phase 2–3):** 1 RBI circular + 1 HDFC Bank annual report + 1 SEBI circular
 - **Full target:** 15–20 PDFs by Phase 6
 - **Storage:** `data/raw_pdfs/` (gitignored), vectors in `data/chroma_db/` (gitignored)
+- **PDF sources:** [docs/DATA_SOURCES.md](docs/DATA_SOURCES.md)
 
 **Sample questions:**
 - *"What is the minimum capital requirement in the RBI master direction?"*
@@ -40,7 +41,8 @@ FinancialComplianceRAG/
 │   └── chroma_db/              # Vector store (gitignored)
 ├── docs/
 │   ├── PROJECT_SPEC.md         # Master technical specification
-│   └── PHASE_LOG.md            # Per-phase learning notes
+│   ├── PHASE_LOG.md            # Per-phase learning notes
+│   └── DATA_SOURCES.md         # PDF download guide
 ├── notebooks/                  # RAG workflow notebook
 ├── scripts/                    # Download / utility scripts
 ├── src/                        # Core Python modules
@@ -65,7 +67,7 @@ FinancialComplianceRAG/
 | Phase | Name | Status |
 |-------|------|--------|
 | 0 | Scaffold & Spec | ✅ Complete |
-| 1 | Project Setup & MLOps | ⬜ Pending |
+| 1 | Project Setup & MLOps | ✅ Complete |
 | 2 | Document Ingestion | ⬜ Pending |
 | 3 | Embeddings & Vector Store | ⬜ Pending |
 | 4 | Retrieval System | ⬜ Pending |
