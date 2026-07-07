@@ -60,8 +60,8 @@ This project delivers an **enterprise-grade Retrieval-Augmented Generation (RAG)
 | FR-01 | Load configuration from `.env` | `src/config.py` | ✅ |
 | FR-02 | Extract text from PDFs with page metadata | `src/ingest_docs.py` | ✅ |
 | FR-03 | Chunk text paragraph-aware (not naive char splits) | `src/ingest_docs.py` | ✅ |
-| FR-04 | Embed chunks with Sentence-Transformers | `src/embeddings.py` | ⬜ Phase 3 |
-| FR-05 | Persist embeddings in ChromaDB | `src/vectorstore.py` | ⬜ Phase 3 |
+| FR-04 | Embed chunks with Sentence-Transformers | `src/embeddings.py` | ✅ |
+| FR-05 | Persist embeddings in ChromaDB | `src/vectorstore.py` | ✅ |
 | FR-06 | Retrieve top-k similar chunks for a query | `src/retriever.py` | ⬜ Phase 4 |
 | FR-07 | Generate grounded answer via OpenRouter | `src/generator.py` | ⬜ Phase 5 |
 | FR-08 | End-to-end `query(question) -> RAGResponse` | `src/rag_pipeline.py` | ⬜ Phase 6 |
@@ -202,7 +202,7 @@ TOP_K=5
 |-------|------|--------|------------|
 | **1** | Project Setup & MLOps | ✅ Complete | `pytest tests/test_phase1_setup.py -v` |
 | **2** | Document Ingestion | ✅ Complete | `pytest tests/test_phase2_ingest.py -v` |
-| **3** | Embeddings & Vector Store | ⬜ Pending | `pytest tests/test_phase3_vectorstore.py -v` |
+| **3** | Embeddings & Vector Store | ✅ Complete | `pytest tests/test_phase3_vectorstore.py -v` |
 | **4** | Retrieval System | ⬜ Pending | `pytest tests/test_phase4_retriever.py -v` |
 | **5** | LLM Generator | ⬜ Pending | `pytest tests/test_phase5_generator.py -v` |
 | **6** | Streamlit Chat UI | ⬜ Pending | `pytest tests/test_phase6_dashboard.py -v` |
@@ -264,4 +264,7 @@ FinancialComplianceRAG/
 | Date | Version | Change |
 |------|---------|--------|
 | 2026-07-07 | 1.0 | Spec finalized; scaffold pushed to GitHub |
-| 2026-07-07 | 1.3 | Phase 2 complete — ingest_docs, schemas, download script, checkpoint tests |
+| 2026-07-07 | 1.1 | Initial PDFs updated to RBI + HDFC + SEBI |
+| 2026-07-07 | 1.2 | Phase 1 complete — config, setup tests, data source guide |
+| 2026-07-07 | 1.3 | Phase 2 complete — ingest pipeline and download script |
+| 2026-07-07 | 1.4 | Phase 3 complete — embeddings, vectorstore, and ChromaDB persistence |

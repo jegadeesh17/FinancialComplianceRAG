@@ -69,7 +69,7 @@ FinancialComplianceRAG/
 | 0 | Scaffold & Spec | ✅ Complete |
 | 1 | Project Setup & MLOps | ✅ Complete |
 | 2 | Document Ingestion | ✅ Complete |
-| 3 | Embeddings & Vector Store | ⬜ Pending |
+| 3 | Embeddings & Vector Store | ✅ Complete |
 | 4 | Retrieval System | ⬜ Pending |
 | 5 | LLM Generator | ⬜ Pending |
 | 6 | Streamlit Chat UI | ⬜ Pending |

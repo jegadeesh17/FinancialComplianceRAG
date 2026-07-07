@@ -91,3 +91,27 @@ python scripts/download_docs.py   # optional — fetch real PDFs
 pytest tests/test_phase2_ingest.py -m integration -v   # needs PDFs in data/raw_pdfs/
 ```
 
+---
+
+## Phase 3 — Embeddings & Vector Store
+
+**Completed:** 2026-07-07
+
+### What we built
+- `src/embeddings.py` — MiniLM model loader + `embed_texts` / `embed_query`
+- `src/vectorstore.py` — persistent ChromaDB client, collection management, batched upserts
+- `tests/test_phase3_vectorstore.py` — embedding, persistence, idempotency, and full-corpus integration checks
+- Notebook Steps 5–6 wired (embedding dimension check + index build)
+
+### Concepts
+- **Embedding dimension:** `all-MiniLM-L6-v2` outputs 384-dimensional vectors
+- **Persistent vector store:** ChromaDB persists to `data/chroma_db/` for reuse between runs
+- **Batch upsert:** Large corpora must be written in batches to respect Chroma max batch limits
+
+### Checkpoint
+8 unit tests passed and 1 integration test passed.
+
+```powershell
+pytest tests/test_phase3_vectorstore.py -v
+pytest tests/test_phase3_vectorstore.py -m integration -v
+```
