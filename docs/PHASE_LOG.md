@@ -62,3 +62,32 @@ pytest tests/test_phase1_setup.py -v
 ```
 
 ---
+
+## Phase 2 — Document Ingestion
+
+**Completed:** 2026-07-07
+
+### What we built
+- `src/schemas.py` — `DocumentChunk` Pydantic model (`source`, `page`, `text`, `chunk_index`)
+- `src/ingest_docs.py` — PyMuPDF extraction + paragraph-aware chunking
+- `scripts/download_docs.py` — auto-download RBI / HDFC / SEBI PDFs (with manual fallback)
+- `tests/test_phase2_ingest.py` — chunking, extraction, and ingest checkpoint tests
+- Notebook Steps 1–3 wired (config, PDF listing, ingest)
+
+### Concepts
+- **Paragraph-aware chunking:** Split on `\n\n` first; only hard-split when a paragraph exceeds `chunk_size`
+- **Page metadata:** Every chunk keeps `source` (filename) and `page` (1-indexed) for citations
+- **Download script:** Government/bank URLs change often — script validates `%PDF` magic bytes; manual fallback documented
+
+### Download status (2026-07-07)
+- ✅ `rbi_master_direction_kyc.pdf` — auto-download works
+- ✅ `sebi_circular_disclosure.pdf` — auto-download works
+- ⚠️ `hdfc_bank_annual_report.pdf` — large file; may timeout. Download manually from [HDFC IR](https://www.hdfcbank.com/personal/about-us/investor-relations/annual-reports) if script fails.
+
+
+```powershell
+pytest tests/test_phase2_ingest.py -v
+python scripts/download_docs.py   # optional — fetch real PDFs
+pytest tests/test_phase2_ingest.py -m integration -v   # needs PDFs in data/raw_pdfs/
+```
+

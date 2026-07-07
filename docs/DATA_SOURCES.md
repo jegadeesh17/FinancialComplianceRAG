@@ -8,9 +8,9 @@ This document lists the **initial 3 PDFs** and how to obtain them. PDFs are stor
 
 | # | Type | Document | Where to get it | Filename suggestion |
 |---|------|----------|-----------------|---------------------|
-| 1 | **Regulatory** | RBI Master Direction on KYC | [RBI Master Directions](https://www.rbi.org.in/Scripts/BS_ViewMasDirections.aspx) → search "KYC" | `rbi_master_direction_kyc.pdf` |
-| 2 | **Annual report** | HDFC Bank Annual Report (FY2023–24 or latest) | [HDFC Bank Investor Relations](https://www.hdfcbank.com/personal/about-us/investor-relations/financial-results) → Annual Report PDF | `hdfc_bank_annual_report.pdf` |
-| 3 | **Regulatory** | SEBI circular (e.g. LODR / disclosure) | [SEBI Legal Framework](https://www.sebi.gov.in/legal.html) → Circulars | `sebi_circular_disclosure.pdf` |
+| 1 | **Regulatory** | RBI Master Direction on KYC | [Direct PDF](https://www.rbi.org.in/commonman/Upload/English/Notification/PDFs/MD18KYCF6E92C82E1E1419D87323E3869BC9F13.pdf) | `rbi_master_direction_kyc.pdf` |
+| 2 | **Annual report** | HDFC Bank Integrated Annual Report FY2023-24 | [HDFC IR — Annual Reports](https://www.hdfcbank.com/personal/about-us/investor-relations/annual-reports) | `hdfc_bank_annual_report.pdf` |
+| 3 | **Regulatory** | SEBI LODR circular (BRR / disclosure) | [Direct PDF](https://www.sebi.gov.in/sebi_data/attachdocs/1486375066836.pdf) | `sebi_circular_disclosure.pdf` |
 
 ---
 

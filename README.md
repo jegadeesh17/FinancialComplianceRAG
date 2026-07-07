@@ -68,7 +68,7 @@ FinancialComplianceRAG/
 |-------|------|--------|
 | 0 | Scaffold & Spec | ✅ Complete |
 | 1 | Project Setup & MLOps | ✅ Complete |
-| 2 | Document Ingestion | ⬜ Pending |
+| 2 | Document Ingestion | ✅ Complete |
 | 3 | Embeddings & Vector Store | ⬜ Pending |
 | 4 | Retrieval System | ⬜ Pending |
 | 5 | LLM Generator | ⬜ Pending |

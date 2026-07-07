@@ -1,0 +1,16 @@
+"""Pydantic models for document ingestion and RAG pipeline."""
+
+from pydantic import BaseModel, Field
+
+
+class DocumentChunk(BaseModel):
+    """A text chunk extracted from a PDF with source metadata."""
+
+    source: str = Field(..., min_length=1, description="PDF filename")
+    page: int = Field(..., ge=1, description="1-indexed page number")
+    text: str = Field(..., min_length=1, description="Chunk text content")
+    chunk_index: int = Field(
+        default=0,
+        ge=0,
+        description="0-based chunk index within the source document",
+    )
