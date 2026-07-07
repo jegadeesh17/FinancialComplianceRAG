@@ -72,7 +72,7 @@ FinancialComplianceRAG/
 | 3 | Embeddings & Vector Store | ✅ Complete |
 | 4 | Retrieval System | ✅ Complete |
 | 5 | LLM Generator | ✅ Complete |
-| 6 | Streamlit Chat UI | ⬜ Pending |
+| 6 | Streamlit Chat UI | ✅ Complete |
 | 7 | Containerization (Docker) | ⬜ Pending |
 
 Run scaffold test: `pytest tests/test_phase0_scaffold.py -v`  

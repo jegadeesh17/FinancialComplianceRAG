@@ -165,3 +165,29 @@ pytest tests/test_phase4_retriever.py -m integration -v
 pytest tests/test_phase5_generator.py -v
 pytest tests/test_phase5_generator.py -m integration -v
 ```
+
+---
+
+## Phase 6 — Streamlit Chat UI
+
+**Completed:** 2026-07-07
+
+### What we built
+- `src/rag_pipeline.py` — end-to-end `ask_question()` orchestration (retrieve → generate)
+- `src/chat.py` — chat session-state helpers + citation formatting
+- `app/app.py` — Streamlit chat interface with history, spinner, and source citations
+- `tests/test_phase6_dashboard.py` — chat helpers, pipeline wiring, and Streamlit `AppTest` smoke tests
+- Notebook Steps 9–10 wired (sample Q&A loop + deployment command)
+
+### Concepts
+- **Pipeline boundary:** UI calls one function (`ask_question`) instead of manually wiring retriever/generator each time
+- **Session state chat log:** Messages persist across reruns for conversational UX
+- **UI testability:** `streamlit.testing.v1.AppTest` enables headless app validation in pytest
+
+### Checkpoint
+4 unit tests passed and 1 integration UI test passed.
+
+```powershell
+pytest tests/test_phase6_dashboard.py -v
+pytest tests/test_phase6_dashboard.py -m integration -v
+```
