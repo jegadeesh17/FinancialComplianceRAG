@@ -30,9 +30,17 @@ def append_message(role: str, content: str, citations: list[Citation] | list[dic
 def format_citations(citations: list[Citation] | list[dict]) -> str:
     if not citations:
         return "Sources: none"
-    parts = []
+    grouped: dict[str, set[int]] = {}
     for c in citations:
         source = c.source if hasattr(c, "source") else c.get("source", "")
-        page = c.page if hasattr(c, "page") else c.get("page", "")
-        parts.append(f"{source} (p.{page})")
-    return "Sources: " + ", ".join(parts)
+        page = int(c.page if hasattr(c, "page") else c.get("page", 0))
+        grouped.setdefault(source, set()).add(page)
+
+    parts = []
+    for source, pages in grouped.items():
+        ordered = sorted(p for p in pages if p > 0)
+        page_text = ",".join(str(p) for p in ordered[:5])
+        if len(ordered) > 5:
+            page_text += ",..."
+        parts.append(f"{source} (p.{page_text})")
+    return "Sources: " + " | ".join(parts)

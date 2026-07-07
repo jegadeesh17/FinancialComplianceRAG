@@ -26,6 +26,18 @@ class TestChatHelpers:
 
         assert format_citations([]) == "Sources: none"
 
+    def test_format_citations_groups_pages(self):
+        from src.chat import format_citations
+        from src.schemas import Citation
+
+        text = format_citations(
+            [
+                Citation(source="rbi.pdf", page=12),
+                Citation(source="rbi.pdf", page=14),
+            ]
+        )
+        assert "rbi.pdf (p.12,14)" in text
+
 
 class TestRagPipeline:
     def test_ask_question_wires_retriever_and_generator(self, monkeypatch):
@@ -58,12 +70,16 @@ class TestAppSmoke:
 
     @pytest.mark.integration
     def test_chat_roundtrip_with_mocked_pipeline(self, monkeypatch):
-        from src.schemas import Citation, RAGResponse
+        from src.schemas import Citation, RAGResponse, RetrievalResult
 
-        def fake_ask(_q):
+        def fake_retrieve(_q, top_k=5):  # noqa: ARG001
+            return [RetrievalResult(source="doc.pdf", page=1, text="Some chunk", chunk_index=0, score=0.1)]
+
+        def fake_generate(_q, _contexts):
             return RAGResponse(answer="Test response", citations=[Citation(source="doc.pdf", page=1)], model="mock")
 
-        monkeypatch.setattr("src.rag_pipeline.ask_question", fake_ask)
+        monkeypatch.setattr("src.retriever.retrieve", fake_retrieve)
+        monkeypatch.setattr("src.generator.generate_answer", fake_generate)
 
         app_path = PROJECT_ROOT / "app" / "app.py"
         at = AppTest.from_file(str(app_path))

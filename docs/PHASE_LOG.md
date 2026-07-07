@@ -192,6 +192,12 @@ pytest tests/test_phase6_dashboard.py -v
 pytest tests/test_phase6_dashboard.py -m integration -v
 ```
 
+### UI enhancement pass (2026-07-07)
+- Added sidebar controls (`top_k`, clear chat, context debug toggle)
+- Added index status panel (indexed chunk count + PDF count)
+- Added expandable retrieved-context view with score/source/page
+- Improved citation rendering by grouping pages per source
+
 ---
 
 ## Phase 7 — Containerization (Docker)
