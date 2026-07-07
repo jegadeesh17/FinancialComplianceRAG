@@ -1,0 +1,14 @@
+venv/
+__pycache__/
+*.pyc
+.env
+data/raw_pdfs/*
+!data/raw_pdfs/.keep
+data/chroma_db/*
+!data/chroma_db/.keep
+data/*
+!data/.keep
+models/*
+!models/.keep
+.pytest_cache/
+.chroma/
