@@ -107,7 +107,7 @@ def main() -> int:
     ok = 0
     failed: list[str] = []
 
-    with httpx.Client(timeout=TIMEOUT, headers={"User-Agent": "FinancialComplianceRAG/1.0"}) as client:
+    with httpx.Client(timeout=TIMEOUT, headers={"User-Agent": "FinancialIntelligenceCopilot/1.0"}) as client:
         for doc in DOCUMENTS:
             if download_document(client, doc, OUTPUT_DIR):
                 ok += 1

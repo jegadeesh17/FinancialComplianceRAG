@@ -1,4 +1,4 @@
-# PDF Data Sources — Financial Compliance RAG
+# PDF Data Sources — Financial Intelligence Copilot
 
 This document lists the **initial 3 PDFs** and how to obtain them. PDFs are stored in `data/raw_pdfs/` (gitignored).
 

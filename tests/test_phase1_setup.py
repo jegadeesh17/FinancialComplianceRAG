@@ -33,7 +33,7 @@ class TestProjectStructure:
             "README.md",
             "docs/PROJECT_SPEC.md",
             "docs/DATA_SOURCES.md",
-            "notebooks/FinancialComplianceRAG.ipynb",
+            "notebooks/FinancialIntelligenceCopilot.ipynb",
         ],
     )
     def test_required_files_exist(self, project_root: Path, relative_path: str):

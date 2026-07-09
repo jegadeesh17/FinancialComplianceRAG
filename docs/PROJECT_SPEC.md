@@ -1,4 +1,4 @@
-# Financial Compliance RAG — Technical Specification
+# Financial Intelligence Copilot — Technical Specification
 
 ---
 
@@ -7,22 +7,27 @@
 | Field | Value |
 |-------|-------|
 | **Document** | PROJECT_SPEC.md |
-| **Version** | 1.1 |
-| **Status** | Active — Phase 1 complete |
-| **Last updated** | 2026-07-07 |
-| **Repository** | [github.com/jegadeesh17/FinancialComplianceRAG](https://github.com/jegadeesh17/FinancialComplianceRAG) |
-| **Project folder** | `FinancialComplianceRAG` |
+| **Version** | 2.0 |
+| **Status** | Active — Dual-vertical build in progress |
+| **Last updated** | 2026-07-09 |
+| **Repository** | [github.com/jegadeesh17/FinancialIntelligenceCopilot](https://github.com/jegadeesh17/FinancialIntelligenceCopilot) |
+| **Project folder** | `FinancialIntelligenceCopilot` |
 | **Related docs** | [README.md](../README.md), [PHASE_LOG.md](./PHASE_LOG.md) |
 
 ---
 
 ## 1. Executive Summary
 
-This project delivers an **enterprise-grade Retrieval-Augmented Generation (RAG) system** for financial compliance document intelligence. Compliance and risk teams drown in fragmented regulatory PDFs (RBI, SEBI) and disclosure filings (10-K, annual reports). The system ingests PDFs, embeds chunks into ChromaDB, retrieves relevant passages, and generates **grounded, citation-backed answers** via OpenRouter — so every response is auditable and hallucination-resistant.
+This project delivers a **practical, interview-ready Retrieval-Augmented Generation (RAG) system** with two focused verticals:
+
+1. **Compliance Intelligence** (RBI/SEBI circulars and policy documents)
+2. **Earnings & Market Intelligence** (quarterly-result PDFs + market snapshot signals)
+
+The system ingests PDFs, embeds chunks into ChromaDB, retrieves relevant passages, and generates **grounded, citation-backed answers** via OpenRouter. It also surfaces retrieval confidence and corpus mix health so stale evidence is detectable.
 
 **Interview pitch:**
 
-> *"Compliance teams drown in regulatory PDFs they can't search effectively. I built an enterprise RAG system that ingests RBI circulars and financial filings, chunks them semantically, stores embeddings in ChromaDB, and answers analyst questions via OpenRouter with mandatory page-level citations."*
+> *"I built a dual-vertical financial intelligence RAG system that combines compliance circulars and quarterly filings, uses ChromaDB retrieval with confidence gating, and answers via OpenRouter with page-level citations."*
 
 ---
 
@@ -40,6 +45,10 @@ This project delivers an **enterprise-grade Retrieval-Augmented Generation (RAG)
 | 6 | Streamlit chat UI with citation display (doc name + page) |
 | 7 | Docker containerization |
 | 8 | Per-phase pytest checkpoint tests |
+| 9 | Top-5 NIFTY watchlist scraping for quarterly-result PDFs |
+| 10 | Current FY backfill scraping and manifest dedup tracking |
+| 11 | Corpus ratio health checks for compliance vs earnings mix |
+| 12 | Market snapshot extraction (headline sentiment + fundamentals) |
 
 ### 2.2 Out of Scope
 
@@ -67,6 +76,10 @@ This project delivers an **enterprise-grade Retrieval-Augmented Generation (RAG)
 | FR-08 | End-to-end `query(question) -> RAGResponse` | `src/rag_pipeline.py` | ✅ |
 | FR-09 | Streamlit chat UI with source citations | `app/app.py` | ✅ |
 | FR-10 | Containerized deployment | `Dockerfile`, `docker-compose.yml` | ✅ |
+| FR-11 | Flag weak retrieval confidence by distance threshold | `src/retriever.py`, `src/config.py` | ✅ |
+| FR-12 | Return confidence fields in `/ask` and UI | `api/main.py`, `app/app.py` | ✅ |
+| FR-13 | Attach vertical metadata to chunks (source_url, company, regulator, vertical) | `src/ingest_docs.py`, `src/vectorstore.py` | ✅ |
+| FR-14 | Expose corpus mix summary in API health + UI sidebar | `src/corpus_stats.py`, `api/main.py`, `app/app.py` | ✅ |
 
 ### 3.2 Non-Functional Requirements
 
@@ -114,7 +127,7 @@ User Question ──▶ Retriever ──┘
 
 | Layer | Path | Role |
 |-------|------|------|
-| Orchestrator | `notebooks/FinancialComplianceRAG.ipynb` | Step-by-step lab; calls `src/` |
+| Orchestrator | `notebooks/FinancialIntelligenceCopilot.ipynb` | Step-by-step lab; calls `src/` |
 | Backend | `src/*.py` | Production logic; unit-tested |
 | UI | `app/app.py` | Streamlit chat with citations |
 | Spec | `docs/PROJECT_SPEC.md` | This document |
@@ -149,7 +162,7 @@ User query ──▶ src/retriever.py ──▶ top-k chunks
 
 | Decision | Status | Value |
 |----------|--------|-------|
-| Project folder name | ✅ Locked | `FinancialComplianceRAG` |
+| Project folder name | ✅ Locked | `FinancialIntelligenceCopilot` |
 | Domain | ✅ Locked | FinTech — Compliance-First Mixed Corpus |
 | LLM provider | ✅ Locked | **OpenRouter** (`openrouter/free`) |
 | Embedding model | ✅ Locked | `sentence-transformers/all-MiniLM-L6-v2` (CPU) |
@@ -207,6 +220,9 @@ TOP_K=5
 | **5** | LLM Generator | ✅ Complete | `pytest tests/test_phase5_generator.py -v` |
 | **6** | Streamlit Chat UI | ✅ Complete | `pytest tests/test_phase6_dashboard.py -v` |
 | **7** | Containerization (Docker) | ✅ Complete | `pytest tests/test_phase7_docker.py -v` |
+| **8** | Dual-Vertical Scraping & Corpus Ops | ✅ Complete | `python scripts/refresh_dual_vertical_index.py` |
+| **9** | Confidence Gate + Metadata Propagation | ✅ Complete | `pytest tests/test_phase2_ingest.py tests/test_phase4_retriever.py tests/test_api.py -q` |
+| **10** | Hardening, Resume Unification, Cleanup | 🟡 In Progress | pending |
 
 **Status legend:** ⬜ Pending → 🟡 In Progress → ✅ Complete
 
@@ -229,14 +245,14 @@ pytest -m integration -v     # live API + real PDFs
 ## 9. File Manifest
 
 ```text
-FinancialComplianceRAG/
+FinancialIntelligenceCopilot/
 ├── app/app.py
 ├── data/raw_pdfs/              # gitignored
 ├── data/chroma_db/             # gitignored
 ├── docs/
 │   ├── PROJECT_SPEC.md
 │   └── PHASE_LOG.md
-├── notebooks/FinancialComplianceRAG.ipynb
+├── notebooks/FinancialIntelligenceCopilot.ipynb
 ├── scripts/download_docs.py
 ├── src/
 │   ├── config.py
@@ -272,3 +288,4 @@ FinancialComplianceRAG/
 | 2026-07-07 | 1.6 | Phase 5 complete — OpenRouter generator, citations, and checkpoint tests |
 | 2026-07-07 | 1.7 | Phase 6 complete — rag_pipeline, chat helpers, Streamlit chat UI, UI tests |
 | 2026-07-07 | 1.8 | Phase 7 complete — Dockerfile, compose stack, and containerization tests |
+| 2026-07-09 | 2.0 | Added dual-vertical architecture, scraping ops scripts, confidence gate, metadata propagation, and corpus coverage surfaces |

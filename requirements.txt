@@ -12,6 +12,7 @@ chromadb==0.5.23
 
 # Phase 5 — LLM generation
 httpx==0.28.1
+beautifulsoup4
 
 # Phase 6 — chat UI
 streamlit==1.40.2

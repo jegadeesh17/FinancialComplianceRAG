@@ -64,6 +64,11 @@ def upsert_chunks(
                 "source": chunk.source,
                 "page": chunk.page,
                 "chunk_index": chunk.chunk_index,
+                "source_url": chunk.source_url,
+                "retrieved_at": chunk.retrieved_at,
+                "regulator": chunk.regulator,
+                "company": chunk.company,
+                "document_vertical": chunk.document_vertical,
             }
             for chunk in batch
         ]

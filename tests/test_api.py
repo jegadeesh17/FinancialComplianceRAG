@@ -62,6 +62,9 @@ class TestAskEndpoint:
         assert body["citations"][0]["source"] == "rbi_master_direction_kyc.pdf"
         assert body["source_chunks"][0]["page"] == 12
         assert body["model"] == "mock-model"
+        assert body["low_confidence"] is False
+        assert isinstance(body["best_score"], float)
+        assert body["source_chunks"][0]["document_vertical"] == "compliance"
 
     def test_ask_rejects_empty_question(self, client):
         response = client.post("/ask", json={"question": ""})

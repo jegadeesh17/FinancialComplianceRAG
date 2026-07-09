@@ -1,4 +1,4 @@
-# Phase Log — Financial Compliance RAG
+# Phase Log — Financial Intelligence Copilot
 
 > Full build specification: [PROJECT_SPEC.md](./PROJECT_SPEC.md)
 
@@ -17,7 +17,7 @@ Use this file to capture what you learned each phase.
 - `README.md` — standard portfolio layout
 - `.env.example`, `pytest.ini`, `requirements.txt` (RAG dependencies)
 - `tests/test_phase0_scaffold.py` — structure checkpoint (scaffold only)
-- Connected to [github.com/jegadeesh17/FinancialComplianceRAG](https://github.com/jegadeesh17/FinancialComplianceRAG)
+- Connected to [github.com/jegadeesh17/FinancialIntelligenceCopilot](https://github.com/jegadeesh17/FinancialIntelligenceCopilot)
 
 ### Concepts
 - **Compliance-first RAG:** Lead with the pain point (regulatory PDF search), not just "chat with PDFs"
@@ -25,7 +25,7 @@ Use this file to capture what you learned each phase.
 - **Spec before code:** PROJECT_SPEC.md is the contract; phases implement against it
 
 ### Locked decisions
-- Project name: `FinancialComplianceRAG`
+- Project name: `FinancialIntelligenceCopilot`
 - Corpus: ~40% regulatory / ~40% annual reports / ~20% insurance
 - LLM: OpenRouter (`openrouter/free`)
 - Embeddings: `all-MiniLM-L6-v2` on CPU
@@ -221,3 +221,93 @@ pytest tests/test_phase6_dashboard.py -m integration -v
 ```powershell
 pytest tests/test_phase7_docker.py -v
 ```
+
+---
+
+## Phase 8 — Dual-Vertical Scraping & Corpus Ops
+
+**Completed:** 2026-07-09
+
+### What we built
+- `scripts/nifty50_top5_config.py` — shared top-5 NIFTY watchlist
+- `scripts/scrape_latest_quarterly_pdfs.py` — scrape/discover latest quarterly-result PDFs
+- `scripts/backfill_current_fy_quarterly_pdfs.py` — current financial-year backfill per company
+- `scripts/scrape_market_sentiment.py` — lightweight sentiment/fundamental snapshot
+- `scripts/refresh_dual_vertical_index.py` — corpus ratio checks + index rebuild
+- `requirements.txt` update — `beautifulsoup4`
+
+### Concepts
+- **Discovery vs source authority:** Moneycontrol is used for discovery; PDFs remain the source of truth for RAG ingestion
+- **Batch-first refresh:** corpus updates happen offline, not during `/ask`
+- **Portfolio practicality:** enough automation for demos without scheduler/service sprawl
+
+### Checkpoint
+- New scripts compile and run as standalone utilities.
+
+```powershell
+python scripts/scrape_latest_quarterly_pdfs.py
+python scripts/backfill_current_fy_quarterly_pdfs.py
+python scripts/scrape_market_sentiment.py
+python scripts/refresh_dual_vertical_index.py
+```
+
+---
+
+## Phase 9 — Confidence Gate + Metadata Propagation
+
+**Completed:** 2026-07-09
+
+### What we built
+- Retrieval confidence threshold in `src/config.py` + `src/retriever.py`
+- `low_confidence` + `best_score` added across pipeline/API/UI
+- Metadata contract expanded in `src/schemas.py` and propagated:
+  - `source_url`, `retrieved_at`, `regulator`, `company`, `document_vertical`
+- Ingestion now reads `earnings_manifest.json` and auto-tags chunks
+- Added `src/corpus_stats.py` and exposed corpus coverage via `/health` and Streamlit sidebar
+
+### Concepts
+- **Confidence-aware RAG:** when retrieval quality is weak, communicate uncertainty explicitly
+- **End-to-end metadata lineage:** ingest → vectorstore → retrieval → API response
+- **Dual-vertical observability:** visibility into compliance/earnings mix avoids hidden data skew
+
+### Checkpoint
+- Target tests passed after these changes.
+
+```powershell
+pytest tests/test_phase2_ingest.py tests/test_phase4_retriever.py tests/test_api.py -q
+```
+
+---
+
+## Phase 10 — Hardening, Resume Unification, and Cleanup
+
+**Status:** Complete (2026-07-09)
+
+### Completed
+- Consolidated to one integrated resume: `ZGeneral/Jegadeesh_D_Course_Model_Resume.md`
+- Moved stale ZGeneral files to `.trash/20260709/`
+- **Phase 10A:** Dual-vertical UI (vertical metrics, sample queries, confidence badges, market snapshot timestamp)
+- **Phase 10B:** Added `tests/test_scrape_quarterly.py` and `tests/test_refresh_dual_vertical_index.py`
+- **Phase 10C:** Updated `README.md` and `docs/DEMO.md` with dual-vertical demo flow
+- **Phase 10D:** Verification run (`pytest -m "not integration" -q`, refresh script)
+- **Phase 10E:** Archived local `AgenticMarketResearcher` to `.trash/20260709/`
+
+### Checkpoint
+```powershell
+pytest -m "not integration" -q
+python scripts/refresh_dual_vertical_index.py
+streamlit run app/app.py
+```
+
+---
+
+## Tomorrow Plan — Remaining Phases (2026-07-09 Morning)
+
+**All items below completed on 2026-07-09.**
+
+### Phase 10A — Dual-Vertical UX Completion ✅
+### Phase 10B — Hardening Tests ✅
+### Phase 10C — Docs Sync ✅
+### Phase 10D — Manual Verification ✅
+### Phase 10E — AgenticMarketResearcher Archive ✅
+

@@ -25,7 +25,7 @@ class TestScaffoldStructure:
             "app/app.py",
             "docs/PROJECT_SPEC.md",
             "docs/PHASE_LOG.md",
-            "notebooks/FinancialComplianceRAG.ipynb",
+            "notebooks/FinancialIntelligenceCopilot.ipynb",
             "requirements.txt",
             ".env.example",
             "pytest.ini",

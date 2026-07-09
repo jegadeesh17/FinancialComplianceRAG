@@ -39,6 +39,12 @@ class Settings(BaseSettings):
     chunk_size: int = Field(default=800, ge=200, le=4000)
     chunk_overlap: int = Field(default=100, ge=0, le=1000)
     top_k: int = Field(default=5, ge=1, le=20)
+    low_confidence_distance: float = Field(
+        default=0.85,
+        ge=0.0,
+        le=2.0,
+        description="If best retrieval distance is above this threshold, flag low confidence.",
+    )
 
     @field_validator("chunk_overlap")
     @classmethod

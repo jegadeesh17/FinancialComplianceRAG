@@ -53,6 +53,34 @@ def retrieve(
                 chunk_index=int(md.get("chunk_index", 0)),
                 text=text,
                 score=float(distance),
+                source_url=str(md.get("source_url", "")),
+                retrieved_at=str(md.get("retrieved_at", "")),
+                regulator=str(md.get("regulator", "other")),
+                company=str(md.get("company", "")),
+                document_vertical=str(md.get("document_vertical", "compliance")),
             )
         )
     return results
+
+
+def get_best_score(results: list[RetrievalResult]) -> float | None:
+    """Return lowest distance score from retrieval results."""
+    if not results:
+        return None
+    return min(item.score for item in results)
+
+
+def is_low_confidence(
+    results: list[RetrievalResult],
+    settings: Settings | None = None,
+    threshold: float | None = None,
+) -> bool:
+    """Decide if retrieval quality is too weak for confident answering."""
+    if not results:
+        return True
+    settings = settings or get_settings()
+    cut_off = threshold if threshold is not None else settings.low_confidence_distance
+    best = get_best_score(results)
+    if best is None:
+        return True
+    return best > cut_off

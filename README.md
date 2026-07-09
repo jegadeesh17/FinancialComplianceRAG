@@ -1,11 +1,11 @@
-# Financial Compliance RAG
+# Financial Intelligence Copilot
 ---
 ### **Project Overview**
-Financial Compliance RAG is an enterprise Retrieval-Augmented Generation system for BFSI compliance document intelligence. It ingests regulatory PDFs (RBI, SEBI) and financial filings (10-K, annual reports), embeds them into ChromaDB, and answers analyst questions via OpenRouter with **mandatory page-level source citations**.
+**Financial Intelligence Copilot** is a dual-vertical Retrieval-Augmented Generation system for BFSI document intelligence. It ingests regulatory PDFs (RBI, SEBI) and quarterly earnings filings, embeds them into ChromaDB, and answers analyst questions via OpenRouter with **mandatory page-level source citations** and retrieval confidence signals.
 
-**Interview pitch:** *"Compliance teams drown in regulatory PDFs they can't search effectively. I built an enterprise RAG system that ingests RBI circulars and financial filings, stores embeddings in ChromaDB, and answers questions via OpenRouter with mandatory page-level citations — so every answer is auditable."*
+**Interview pitch:** *"I built Financial Intelligence Copilot — a dual-vertical RAG system that answers compliance and earnings questions from RBI/SEBI circulars and quarterly-result PDFs, with ChromaDB retrieval, confidence gating, and auditable page-level citations."*
 
-**Repository:** [github.com/jegadeesh17/FinancialComplianceRAG](https://github.com/jegadeesh17/FinancialComplianceRAG)  
+**Repository:** [github.com/jegadeesh17/FinancialIntelligenceCopilot](https://github.com/jegadeesh17/FinancialIntelligenceCopilot)  
 **Full specification:** [docs/PROJECT_SPEC.md](docs/PROJECT_SPEC.md)  
 **Learning log:** [docs/PHASE_LOG.md](docs/PHASE_LOG.md)
 
@@ -34,7 +34,7 @@ Financial Compliance RAG is an enterprise Retrieval-Augmented Generation system 
 ---
 ### **Project Structure**
 ```text
-FinancialComplianceRAG/
+FinancialIntelligenceCopilot/
 ├── app/app.py                  # Streamlit chat UI
 ├── data/
 │   ├── raw_pdfs/               # PDF corpus (gitignored)
@@ -80,7 +80,7 @@ Full spec: [docs/PROJECT_SPEC.md](docs/PROJECT_SPEC.md)
 
 ### **3-Command Quickstart**
 ```powershell
-cd FinancialComplianceRAG
+cd FinancialIntelligenceCopilot
 pip install -r requirements.txt
 cp .env.example .env   # add OPENROUTER_API_KEY
 python scripts/download_docs.py; python scripts/seed_extra_pdfs.py; python scripts/build_index.py
@@ -105,12 +105,42 @@ python scripts/eval_retrieval.py
 - Target: ≥ 70% retrieval hit rate
 
 ---
+### **Dual Vertical Expansion (Compliance + Earnings)**
+- Top-5 NIFTY50 watchlist scraping for quarterly-result PDFs (Moneycontrol discovery)
+- Backfill current FY quarterly filings for coverage depth
+- Lightweight market snapshot (headline sentiment + basic fundamentals)
+- Corpus mix check before indexing (compliance vs earnings balance)
+
+```powershell
+# 1) Latest quarterly-result scrape (top 5 NIFTY companies)
+python scripts/scrape_latest_quarterly_pdfs.py
+
+# 2) Backfill current financial-year quarterly filings
+python scripts/backfill_current_fy_quarterly_pdfs.py
+
+# 3) Optional market sentiment/fundamental snapshot
+python scripts/scrape_market_sentiment.py
+
+# 4) Validate corpus balance and rebuild vector index
+python scripts/refresh_dual_vertical_index.py
+```
+
+Notes:
+- `data/raw_pdfs/earnings_manifest.json` tracks scraped earnings PDFs.
+- Quarterly scrapers rely on live page structure; if scrape misses links, add PDF URLs manually in the manifest and rerun index refresh.
+
+---
 ### **Demo Script**
 See [docs/DEMO.md](docs/DEMO.md) for a 5-minute interview demo flow.
 
+**Quick demo loop:**
+1. Ask a compliance question in Streamlit (or use sample button).
+2. If confidence is LOW, run `python scripts/refresh_dual_vertical_index.py`.
+3. Ask an earnings question and verify citations + vertical mix in sidebar.
+
 ---
 ```powershell
-cd FinancialComplianceRAG
+cd FinancialIntelligenceCopilot
 pip install -r requirements.txt
 cp .env.example .env   # add OPENROUTER_API_KEY
 streamlit run app/app.py
@@ -136,11 +166,11 @@ docker compose up --build
 
 ---
 ### **Getting Started**
-1. **Clone:** `git clone https://github.com/jegadeesh17/FinancialComplianceRAG.git`
+1. **Clone:** `git clone https://github.com/jegadeesh17/FinancialIntelligenceCopilot.git`
 2. **Install:** `pip install -r requirements.txt`
 3. **Configure:** `cp .env.example .env` and add your OpenRouter API key
 4. **Test scaffold:** `pytest tests/test_phase0_scaffold.py -v`
-5. **Notebook:** Open `notebooks/FinancialComplianceRAG.ipynb`
+5. **Notebook:** Open `notebooks/FinancialIntelligenceCopilot.ipynb`
 
 ---
 ### **Example Use Case**
