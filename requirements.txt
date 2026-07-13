@@ -7,8 +7,8 @@ pydantic-settings==2.6.1
 pymupdf==1.25.1
 
 # Phase 3 — embeddings & vector store
-sentence-transformers==3.3.1
-chromadb==0.5.23
+sentence-transformers>=3.3.1
+chromadb>=1.5.9
 
 # Phase 5 — LLM generation
 httpx==0.28.1
