@@ -19,12 +19,13 @@ def _extract_index_if_needed():
     db_file = db_dir / "chroma.sqlite3"
     zip_path = PROJECT_ROOT / "data" / "chroma_db_lzma.zip"
     
-    if zip_path.exists() and not db_file.exists():
-        try:
-            with zipfile.ZipFile(zip_path, 'r') as zip_ref:
-                zip_ref.extractall(PROJECT_ROOT / "data" / "chroma_db")
-        except Exception:
-            pass
+    if zip_path.exists():
+        if not db_file.exists() or db_file.stat().st_size < 1024 * 1024:
+            try:
+                with zipfile.ZipFile(zip_path, 'r') as zip_ref:
+                    zip_ref.extractall(db_dir)
+            except Exception as e:
+                print(f"Extraction failed: {e}")
 
 _extract_index_if_needed()
 
